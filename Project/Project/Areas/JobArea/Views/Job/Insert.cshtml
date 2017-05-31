@@ -1,0 +1,65 @@
+﻿@model Project.Areas.JobArea.Models.Job
+@{
+    ViewBag.Title = "工作新增";
+}
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}
+@using (Html.BeginForm("Insert", "Job", FormMethod.Post, new {  enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">        
+        @if (ViewBag.Result != null)
+        {
+            @Html.ValidationSummary(true, (string)ViewBag.Result, new { @class = "text-danger" })
+        }
+        <div class="form-group">
+            @Html.LabelFor(e => e.JobName, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.JobName, new { htmlAttributes = new { placehoder = "JobName", @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.JobName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.JobStartTime, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.JobStartTime, new { htmlAttributes = new { placeholder = "面議", @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.TimeID, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @{
+                    var times = new SelectList(ViewBag.datas, "TimeID", "jobtimes");
+                }
+                @Html.DropDownListFor(e => e.TimeID, times, "請選擇時段", new { @class = "form-control" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.PayPerHour, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.PayPerHour, new { htmlAttributes = new { placeholder = "面議", @class = "form-control" } })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.Workplace, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.Workplace, new { htmlAttributes = new { placehoder = "Workplace", @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.Workplace, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.Description, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.Description, new { htmlAttributes = new { placehoder = "Description", @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.Description, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">新增</button>
+            </div>
+        </div>
+    </div>
+ }

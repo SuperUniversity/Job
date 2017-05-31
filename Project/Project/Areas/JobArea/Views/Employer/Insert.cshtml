@@ -1,0 +1,61 @@
+﻿@model Project.Areas.JobArea.Models.EmployerCompany
+@{
+    ViewBag.Title = "雇主新增";
+}
+
+@section scripts{
+    <script src="~/Scripts/jquery.validate.js"></script>
+    <script src="~/Scripts/jquery.validate.unobtrusive.js"></script>
+}
+@using (Html.BeginForm("Insert", "Employer", FormMethod.Post, new { enctype = "multipart/form-data" }))
+{
+    @Html.AntiForgeryToken()
+    <div class="form-horizontal">        
+        @if (ViewBag.Result != null)
+        {
+            @Html.ValidationSummary(true, (string)ViewBag.Result, new { @class = "text-danger" })
+        }
+        <div class="form-group">
+            @Html.LabelFor(e => e.CompanyName, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.CompanyName, new { htmlAttributes = new { placeholder = "公司名稱", @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.CompanyName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.CompanyAdress, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.CompanyAdress, new { htmlAttributes = new { placeholder = "公司地址", @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.CompanyAdress, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.EmployerName, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.EmployerName, new { htmlAttributes = new { placeholder = "聯絡人", @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.EmployerName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.EmployerPhone, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.EmployerPhone, new { htmlAttributes = new { placeholder = "連絡電話", @class = "form-control" } })
+                @Html.ValidationMessageFor(e => e.EmployerPhone, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <div class="form-group">
+            @Html.LabelFor(e => e.EmployerMail, new { @class = "col-sm-2 control-label" })
+            <div class="col-sm-10">
+                @Html.EditorFor(e => e.EmployerMail, new { htmlAttributes = new { placeholder = "Email", @class = "form-control", novalidate = "novalidate" } })
+                @Html.ValidationMessageFor(e => e.EmployerMail, "", new { @class = "text-danger" })
+
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button type="submit" class="btn btn-success">新增</button>
+            </div>
+        </div>
+    </div>
+}
+

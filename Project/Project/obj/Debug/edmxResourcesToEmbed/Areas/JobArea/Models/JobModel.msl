@@ -1,0 +1,58 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="SuperUniversityModelStoreContainer" CdmEntityContainer="SuperUniversityEntities1">
+    <EntitySetMapping Name="CompanyJobTypeTable">
+      <EntityTypeMapping TypeName="SuperUniversityModel.CompanyJobTypeTable">
+        <MappingFragment StoreEntitySet="CompanyJobTypeTable">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+          <ScalarProperty Name="JobType" ColumnName="JobType" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="EmployerCompany">
+      <EntityTypeMapping TypeName="SuperUniversityModel.EmployerCompany">
+        <MappingFragment StoreEntitySet="EmployerCompany">
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+          <ScalarProperty Name="CompanyAdress" ColumnName="CompanyAdress" />
+          <ScalarProperty Name="EmployerName" ColumnName="EmployerName" />
+          <ScalarProperty Name="EmployerPhone" ColumnName="EmployerPhone" />
+          <ScalarProperty Name="EmployerMail" ColumnName="EmployerMail" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Job">
+      <EntityTypeMapping TypeName="SuperUniversityModel.Job">
+        <MappingFragment StoreEntitySet="Job">
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+          <ScalarProperty Name="JobName" ColumnName="JobName" />
+          <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+          <ScalarProperty Name="JobStartTime" ColumnName="JobStartTime" />
+          <ScalarProperty Name="TimeID" ColumnName="TimeID" />
+          <ScalarProperty Name="PayPerHour" ColumnName="PayPerHour" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Workplace" ColumnName="Workplace" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Jobtime">
+      <EntityTypeMapping TypeName="SuperUniversityModel.Jobtime">
+        <MappingFragment StoreEntitySet="Jobtime">
+          <ScalarProperty Name="TimeID" ColumnName="TimeID" />
+          <ScalarProperty Name="jobtimes" ColumnName="jobtimes" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobTypes">
+      <EntityTypeMapping TypeName="SuperUniversityModel.JobTypes">
+        <MappingFragment StoreEntitySet="JobTypes">
+          <ScalarProperty Name="JobTypeID" ColumnName="JobTypeID" />
+          <ScalarProperty Name="JobType" ColumnName="JobType" />
+          <ScalarProperty Name="JobTypeDescription" ColumnName="JobTypeDescription" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

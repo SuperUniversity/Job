@@ -1,0 +1,60 @@
+﻿@model IEnumerable<Project.Areas.JobArea.Models.Job>
+@{
+    ViewBag.Title = "收尋頁面";
+}
+@{
+    if (ViewBag.Result != null)
+    {
+        @Html.Label("primary", (string)ViewBag.Result, new { @class = "text-primary" })
+    }
+}
+
+<a href="~/JobArea/Job/Insert" class="btn btn-info">新增工作</a>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>工作編號</th>
+            <th>工作名稱</th>
+            @*<th>編號</th>*@
+            <th>可上班日</th>
+            @*<th>工作時段</th>*@
+            <th>時薪</th>
+            @*<th>工作描述</th>*@
+            <th>工作地點</th>
+            <th>編輯</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var jb in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(j => jb.JobID)</td>
+                <td>@Html.DisplayFor(j => jb.JobName)</td>
+                @*<td>@Html.DisplayFor(j => jb.CompanyID)</td>*@
+                <td>@Html.DisplayFor(j => jb.JobStartTime)</td>
+                @{
+                    if (jb.PayPerHour == 0)
+                    {
+                        <td>
+                            @Html.DisplayName("面議")
+                        </td>
+                    }
+                    else
+                    {
+                        <td>
+                            @Html.DisplayFor(j => jb.PayPerHour)
+                        </td>
+                    }
+                }
+
+
+
+                <td>@Html.DisplayFor(j => jb.Workplace)</td>
+                <td><a href="~/JobArea/Job/Edit/@jb.JobID" class="btn btn-info">編輯</a></td>
+                <td><a href="~/JobArea/Job/Delete/@jb.JobID" class="btn btn-danger"> 刪除</a></td>
+            </tr>
+                    }
+    </tbody>
+</table>
+

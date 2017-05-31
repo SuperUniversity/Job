@@ -1,0 +1,40 @@
+﻿@model IEnumerable<Project.Areas.JobArea.Models.EmployerCompany>
+@{
+    ViewBag.Title = "廠商名單";
+}
+@{
+    if (ViewBag.Result != null)
+    {
+        @Html.Label("primary", (string)ViewBag.Result, new { @class = "text-primary" })
+    }
+}
+<a href="~/JobArea/Employer/Insert" class="btn btn-info">新增廠商</a>
+<table class="table table-bordered table-hover">
+    <thead>
+        <tr>
+            <th>編號</th>
+            <th>公司名稱</th>
+            <th>公司地址</th>
+            <th>聯絡人</th>
+            <th>聯絡電話</th>
+            <th>聯絡信箱</th>
+            <th>編輯</th>
+            <th>刪除</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var EPC in Model)
+        {
+            <tr>
+                <td>@Html.DisplayFor(e => EPC.CompanyID)</td>
+                <td>@Html.DisplayFor(e => EPC.CompanyName)</td>
+                <td>@Html.DisplayFor(e => EPC.CompanyAdress) </td>
+                <td>@Html.DisplayFor(e => EPC.EmployerName) </td>
+                <td>@Html.DisplayFor(e => EPC.EmployerPhone) </td>
+                <td>@Html.DisplayFor(e => EPC.EmployerMail) </td>
+                <td><a href="~/JobArea/Employer/Edit/@EPC.CompanyID" class="btn btn-info">編輯</a></td>
+                <td><a href="~/JobArea/Employer/Delete/@EPC.CompanyID" class="btn btn-danger"> 刪除</a></td>
+            </tr>
+        }
+    </tbody>
+</table>
