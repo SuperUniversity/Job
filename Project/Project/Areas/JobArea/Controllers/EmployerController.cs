@@ -1,4 +1,5 @@
 ﻿using Project.Areas.JobArea.Models;
+using Project.Areas.JobArea.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -10,6 +11,7 @@ namespace Project.Areas.JobArea.Controllers
     public class EmployerController : Controller
     {
         private IRepository<EmployerCompany> db = new Repository<EmployerCompany>();
+        private superuniversityEntities su = new superuniversityEntities();
         // GET: JobArea/Employer
         public ActionResult Index()
         {
@@ -29,7 +31,7 @@ namespace Project.Areas.JobArea.Controllers
             {
                 db.Create(emp);
                 TempData["Result"] = String.Format("雇主{0}新增成功", emp.CompanyName);
-                return RedirectToAction("Index");
+                return RedirectToAction("Login");
             }
             else
             {
@@ -61,5 +63,38 @@ namespace Project.Areas.JobArea.Controllers
             db.Delete(db.GetById(id));
             return RedirectToAction("Index");
         }
+
+        public ActionResult Login()
+        {
+            return View();
+        }
+        [HttpPost]
+        public ActionResult Login(EmployerLogin login)
+        {
+            var Employer = su.EmployerCompany.FirstOrDefault(u => u.EmployerMail == login.EmployerMail && u.Password == login.Password);
+            if (Employer != null)
+            {
+                Response.Cookies["name"].Value = Employer.CompanyName;
+                Response.Cookies["nameid"].Value = Employer.CompanyID.ToString();
+                if (login.RememberMe)
+                {
+                    Response.Cookies["name"].Expires = DateTime.Now.AddDays(7);
+                }
+                return RedirectToAction("Index", "Job");
+            }
+            else
+            {
+                ViewBag.error = "密碼錯誤";
+                 return View();
+            }
+            
+        }
+        public ActionResult Logout()
+        {
+            Response.Cookies["name"].Expires = DateTime.Now.AddSeconds(-1);
+            Session.Abandon();
+            return RedirectToAction("Index", "Job");
+        }
+
     }
 }

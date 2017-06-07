@@ -8,8 +8,7 @@
     <meta name="author" content="">
 
     <title>@ViewBag.Title </title>
-    @*@Styles.Render("~/Content/css")
-        @RenderSection("styles", false)*@
+        
     <style>
         #footer1 {
             position: fixed;
@@ -24,7 +23,7 @@
     <link href="https://fonts.googleapis.com/css?family=Montserrat:400,700" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Lato:400,700,400italic,700italic" rel="stylesheet" type="text/css">
     <script src="~/Scripts/modernizr-2.6.2.js"></script>
-
+    @RenderSection("styles", false)
 </head>
 <body>
     <nav id="mainNav" class="navbar navbar-default navbar-fixed-top navbar-custom">
@@ -44,10 +43,48 @@
                         <a href="#page-top"></a>
                     </li>
                     <li class="page-scroll">
+                        <a href="~/JobArea/Home/Index">介面瀏覽</a>
+                    </li>
+                    <li class="page-scroll">
                         <a href="#portfolio">模塊</a>
                     </li>
                     <li class="page-scroll">
+                        <a href="~/JobArea/Job/Index">工作管理</a>
+                    </li>
+                    <li class="page-scroll">
+                        <a href="~/JobArea/Employer/Index">廠商管理</a>
+                    </li>
+                    <li class="page-scroll">
                         <a href="#about">關於</a>
+                    </li>
+                    <li >
+                       @{
+                           if (Request.Cookies["name"] == null)
+                           {
+                               @Html.ActionLink("註冊", "Insert", "Employer", null, new { @class = "glyphicon glyphicon-user" });
+                           }
+                           else
+                           {
+                               <span style="color:white" class = "glyphicon glyphicon-user">
+                                   @Html.ActionLink(Request.Cookies["name"].Value, "Index/"+ Request.Cookies["nameID"].Value, "Manager")                                  
+                               </span>
+                               
+                           }
+
+                    } 
+                        
+                    </li>
+                    <li class="page-scroll">
+                        @{ 
+                            if (Request.Cookies["name"] == null)
+                            {
+                                @Html.ActionLink("廠商登入", "Login", "Employer", null, new { @class = "glyphicon glyphicon-user" });
+                            }
+                            else
+                            {                               
+                                @Html.ActionLink(" 登出", "Logout", "Employer", null,new { });
+                            }
+                        }                        
                     </li>
                     <li class="page-scroll">
                         <a href="#contact">聯絡我們</a>
@@ -63,7 +100,7 @@
         <div class="container">
            
             <div class="row">
-                <div class="col-sm-8 col-md-9 col-lg-9">
+                @*<div class="col-sm-8 col-md-9 col-lg-9">*@
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h3 class="panel-title">
@@ -73,7 +110,7 @@
                         <div class="panel-body">
                             @RenderBody()
                         </div>
-                    </div>
+                    @*</div>*@
                 </div>                
             </div>
         </div>
@@ -94,7 +131,6 @@
     <script src="~/Scripts/jquery-1.10.2.min.js"></script>
     <script src="~/Scripts/bootstrap.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/startbootstrap-freelancer/3.3.7/js/freelancer.min.js"></script>
-    @*@Scripts.Render("~/bundles/jquery")*@
     @RenderSection("scripts", false)
 </body>
 </html>

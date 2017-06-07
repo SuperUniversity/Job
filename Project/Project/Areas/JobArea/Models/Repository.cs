@@ -9,7 +9,7 @@ namespace Project.Areas.JobArea.Models
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private SuperUniversityEntities1 db = new SuperUniversityEntities1();
+        private superuniversityEntities db = new superuniversityEntities();
         private DbSet<T> DbSet = null;
 
         public Repository()
@@ -41,7 +41,14 @@ namespace Project.Areas.JobArea.Models
         public void Update(T _entity)
         {
             db.Entry(_entity).State = System.Data.Entity.EntityState.Modified;
-            db.SaveChanges();
+            try
+            {
+                db.SaveChanges();
+            }
+            catch (Exception ex)
+            {
+                string t = ex.Message;
+            }
         }
     }
 }

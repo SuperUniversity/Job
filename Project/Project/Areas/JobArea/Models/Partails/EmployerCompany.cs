@@ -32,6 +32,15 @@ namespace Project.Areas.JobArea.Models
             [DataType(DataType.EmailAddress)]
             [EmailAddress(ErrorMessage = "格式不正確")]
             public string EmployerMail { get; set; }
+            [DisplayName("密碼")]
+            [Required(ErrorMessage = "密碼不可為白")]
+            [DataType(DataType.Password)]
+            public string Password { get; set; }
+            [DataType(DataType.Password)]
+            [DisplayName("密碼確認")]
+            [Compare("Password",ErrorMessage ="密碼不一致")]
+            public string ConfirmPassword { get; set; }
+
         }
     }
 }

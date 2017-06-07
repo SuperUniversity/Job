@@ -22,5 +22,7 @@ namespace Project.Areas.JobArea.Models
         public decimal PayPerHour { get; set; }
         public string Description { get; set; }
         public string Workplace { get; set; }
+        public byte[] Image { get; set; }
+        public string ImageWebSite { get; set; }
     }
 }

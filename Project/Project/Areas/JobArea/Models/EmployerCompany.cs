@@ -20,5 +20,10 @@ namespace Project.Areas.JobArea.Models
         public string EmployerName { get; set; }
         public string EmployerPhone { get; set; }
         public string EmployerMail { get; set; }
+        public string Password { get; set; }
+        public string ConfirmPassword { get; set; }
+        public string CompanyUserID { get; set; }
+        public byte[] Image { get; set; }
+        public string ImageWebSite { get; set; }
     }
 }

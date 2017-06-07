@@ -10,7 +10,7 @@ namespace Project.Areas.JobArea.Controllers
     public class JobController : Controller
     {
         private IRepository<Job> db = new Repository<Job>();
-        private SuperUniversityEntities1 su = new SuperUniversityEntities1();
+        private superuniversityEntities su = new superuniversityEntities();
         // GET: JobArea/Job
         public ActionResult Index()
         {
@@ -25,20 +25,27 @@ namespace Project.Areas.JobArea.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Insert(Job j)
+        public ActionResult Insert(Job j,HttpPostedFileBase byteimg)
         {
+            ViewBag.datas = su.Jobtime.ToList();
             if (this.ModelState.IsValid)
             {
-            db.Create(j);
+                if (byteimg != null)
+                {
+                    j.Image = new byte[byteimg.ContentLength];
+                    byteimg.InputStream.Read(j.Image, 0, byteimg.ContentLength);
+                }
+                db.Create(j);
                 TempData["Result"] = string.Format("工作{0}新增成功", j.JobName);
-            ViewBag.datas = su.Jobtime.ToList();
-            return RedirectToAction("Index");
+               
+                return RedirectToAction("Index");
             }
             else
             {
                 ViewBag.Result = "資料錯誤，請檢查";
-                return View(j);
+                return View();
             }
+
 
         }
         [HttpGet]
@@ -48,8 +55,13 @@ namespace Project.Areas.JobArea.Controllers
             return View(su.Job.Find(id));
         }
         [HttpPost]
-        public ActionResult Edit(Job j, int id)
+        public ActionResult Edit(Job j, int id, HttpPostedFileBase byteimg)
         {
+            if (byteimg != null)
+            {
+                j.Image = new byte[byteimg.ContentLength];
+                byteimg.InputStream.Read(j.Image, 0, byteimg.ContentLength);
+            }
             j.JobID = id;
             db.Update(j);
             ViewBag.datas = su.Jobtime.ToList();

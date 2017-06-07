@@ -13,13 +13,16 @@ namespace Project.Areas.JobArea.Models
         public class JobMetadata
         {
         public int JobID { get; set; }
+
         [DisplayName("工作名稱")]
         [Required(ErrorMessage = "工作名稱不可為白")]
         public string JobName { get; set; }
+
         [DisplayName("公司編號")]
         public Nullable<int> CompanyID { get; set; }
         [DisplayName("可上班日")]
         [DataType(DataType.Date)]
+        [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.TimeSpan> JobStartTime { get; set; }
         [DisplayName("工作時段")]
         public Nullable<System.TimeSpan> TimeID { get; set; }
@@ -33,7 +36,10 @@ namespace Project.Areas.JobArea.Models
         [DisplayName("上班地點")]
         [Required(ErrorMessage = "上班地點不可為白")]
          public string Workplace { get; set; }
-
+         [DisplayName("工作圖片")]
+         public byte[] Image { get; set; }
+         [DisplayName("圖片網址")]
+         public string ImageWebSite { get; set; }
         }
 
     }
