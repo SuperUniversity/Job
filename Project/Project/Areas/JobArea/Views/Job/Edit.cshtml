@@ -108,6 +108,10 @@
                     <input type="file" class="form-control" name="byteimg" />
                 </div>
             </div>
+            <div class="form-group">                
+                @Html.EditorFor(m => m.CompanyID, "", new { htmlAttributes = new { hidden = "hidden" } })
+            </div>
+
             <div class="form-group">
                 <div class="col-sm-offset-2 col-sm-10">
                     <button type="submit" class="btn btn-success">修改</button>

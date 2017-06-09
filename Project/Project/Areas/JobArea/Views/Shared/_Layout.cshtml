@@ -66,7 +66,7 @@
                            else
                            {
                                <span style="color:white" class = "glyphicon glyphicon-user">
-                                   @Html.ActionLink(Request.Cookies["name"].Value, "Index/"+ Request.Cookies["nameID"].Value, "Manager")                                  
+                                   @Html.ActionLink(HttpUtility.UrlDecode(Request.Cookies["name"].Value), "Index/"+ Request.Cookies["nameID"].Value, "Manager")                                  
                                </span>
                                
                            }

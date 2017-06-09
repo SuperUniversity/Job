@@ -11,13 +11,20 @@ namespace Project.Areas.JobArea.Controllers
     public class HomeController : Controller
     {
         superuniversityEntities db = new superuniversityEntities();
-        IRepository<Job> job = new Repository<Job>();   
+        IRepository<Job> job = new Repository<Job>();
+        IRepository<EmployerCompany> _Emp = new Repository<EmployerCompany>();
         // GET: JobArea/Home
         public ActionResult Index(int page=1,int perpage=15,string sortby="",string Jobnamesreach="",string Workplacesreach="",string Allsreach="")
         {
             //前台的工作管理
 
-            //收尋的block
+            //公司名稱
+            //var result = (from s in db.EmployerCompany
+            //              where s.CompanyID == job.
+            //              select s.CompanyName);
+            //ViewBag.name = result;
+
+            //收尋的block            
             var jobfront = new List<Job>();
             var list = db.Job.ToList();
             string allstr = string.IsNullOrEmpty(Allsreach) ? "" : Allsreach;
@@ -87,6 +94,19 @@ namespace Project.Areas.JobArea.Controllers
             return View(job.GetById(id));            
         }
 
+        public ActionResult CompanyDetail(EmployerCompany emp,int id)
+        {
+            ViewBag.Gmap = db.EmployerCompany.Find(job.GetById(id).CompanyID).CompanyAdress.ToString(); 
+            var list=  (from s in db.Job.AsEnumerable()
+                        where (s.CompanyID == int.Parse(Request.Cookies["nameid"].Value))
+                        select s.JobName);
+            ViewBag.Jobname = list.ToList();
+            return View(_Emp.GetById(job.GetById(id).CompanyID));
+        }
+        public ActionResult Hire(Job j)
+        {
 
+            return View();
+        }
     }
 }

@@ -19,7 +19,15 @@ namespace Project.Areas.JobArea.Models
         public void Create(T _entity)
         {
             DbSet.Add(_entity);
-            db.SaveChanges();
+            //try
+            //{
+                db.SaveChanges();
+            //}
+            //catch(Exception ex)
+            //{
+            //    throw;
+            //}
+            
         }
 
         public void Delete(T _entity)
@@ -41,14 +49,14 @@ namespace Project.Areas.JobArea.Models
         public void Update(T _entity)
         {
             db.Entry(_entity).State = System.Data.Entity.EntityState.Modified;
-            try
-            {
+            //try
+            //{
                 db.SaveChanges();
-            }
-            catch (Exception ex)
-            {
-                string t = ex.Message;
-            }
+            //}
+            //catch (Exception ex)
+            //{
+            //    string t = ex.Message;
+            //}
         }
     }
 }

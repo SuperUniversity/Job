@@ -12,6 +12,7 @@ namespace Project.Areas.JobArea.Models
     {
         public class JobMetadata
         {
+        [DisplayName("工作編號")]
         public int JobID { get; set; }
 
         [DisplayName("工作名稱")]

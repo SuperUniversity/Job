@@ -69,24 +69,25 @@ namespace Project.Areas.JobArea.Controllers
             return View();
         }
         [HttpPost]
-        public ActionResult Login(EmployerLogin login)
+        public ActionResult Login(EmployerLogin login,Job j)
         {
-            var Employer = su.EmployerCompany.FirstOrDefault(u => u.EmployerMail == login.EmployerMail && u.Password == login.Password);
-            if (Employer != null)
-            {
-                Response.Cookies["name"].Value = Employer.CompanyName;
-                Response.Cookies["nameid"].Value = Employer.CompanyID.ToString();
-                if (login.RememberMe)
+            
+                var Employer = su.EmployerCompany.FirstOrDefault(u => u.EmployerMail == login.EmployerMail && u.Password == login.Password);
+                if (Employer != null)
                 {
-                    Response.Cookies["name"].Expires = DateTime.Now.AddDays(7);
+                    Response.Cookies["name"].Value = HttpUtility.UrlEncode(Employer.CompanyName);
+                    Response.Cookies["nameid"].Value = Employer.CompanyID.ToString();
+                    if (login.RememberMe)
+                    {
+                        Response.Cookies["name"].Expires = DateTime.Now.AddDays(7);
+                    }
+                    return RedirectToAction("JobManage", "Manager");
+                    //int.Parse(Request.Cookies["nameID"].Value)
                 }
-                return RedirectToAction("Index", "Job");
-            }
-            else
-            {
-                ViewBag.error = "密碼錯誤";
+            
+                ViewBag.error = "帳號或密碼錯誤";
                  return View();
-            }
+            
             
         }
         public ActionResult Logout()

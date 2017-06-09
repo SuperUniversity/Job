@@ -1,5 +1,6 @@
-﻿@{
-    ViewBag.Title = "管理";
+﻿@model Project.Areas.JobArea.Models.Job
+@{
+    ViewBag.Title = "主動應徵";
 }
 @section styles{
     <style>
@@ -64,33 +65,18 @@
         }
     </style>
 }
-<p class="text-success">@ViewBag.StatusMessage</p>
-
-<div>
-    <h4>變更帳戶設定</h4>
-    <hr />
-    <dl class="dl-horizontal">
-        <dt>密碼:</dt>
-        <dd>
-            [
-            @if (Request.Cookies["nameID"].Value != null)
-            {
-                @Html.ActionLink("變更密碼", "ChangePassword",new { id= Request.Cookies["nameID"].Value })
-            }
-            else
-            {
-                @Html.ActionLink("建立", "SetPassword")
-            }
-            ]
-        </dd>
-        <dt>工作管理:</dt>
-        <dd>            
-           [@Html.ActionLink("管理", "JobManage",new { id= Request.Cookies["nameID"].Value },"") ] 
-        </dd>
-        <dt>公司明細修改:</dt>
-        <dd>
-            [@Html.ActionLink("修改資料","Edit", "Employer",new { id= Request.Cookies["nameID"].Value },"")]
-            
-        </dd>
-    </dl>
-</div>
+@using (Html.BeginForm("Hire", "Home", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
+{
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-7">
+            <div class="form-group">
+                @Html.LabelFor(e => e.JobName, new { @class = "col-sm-2 control-label" })
+                <div class="col-sm-10">
+                    <p class="beautiful">@Html.DisplayFor(e => e.JobName)</p> 
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-2"></div>
+    </div>
+}

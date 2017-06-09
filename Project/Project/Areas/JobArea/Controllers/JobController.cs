@@ -21,17 +21,20 @@ namespace Project.Areas.JobArea.Controllers
         [HttpGet]
         public ActionResult Insert()
         {
+            
             ViewBag.datas = su.Jobtime.ToList();
             return View();
         }
         [HttpPost]
         public ActionResult Insert(Job j,HttpPostedFileBase byteimg)
         {
+            j.CompanyID = int.Parse(Request.Cookies["nameID"].Value);
             ViewBag.datas = su.Jobtime.ToList();
-            if (this.ModelState.IsValid)
+            if (ModelState.IsValid)
             {
                 if (byteimg != null)
                 {
+                    
                     j.Image = new byte[byteimg.ContentLength];
                     byteimg.InputStream.Read(j.Image, 0, byteimg.ContentLength);
                 }
@@ -40,14 +43,10 @@ namespace Project.Areas.JobArea.Controllers
                
                 return RedirectToAction("Index");
             }
-            else
-            {
-                ViewBag.Result = "資料錯誤，請檢查";
-                return View();
-            }
-
-
-        }
+            ViewBag.Result = "資料錯誤，請檢查";
+                return View(j);
+    
+}
         [HttpGet]
         public ActionResult Edit(int id = 0)
         {

@@ -124,6 +124,12 @@
                        <input type="file" class="form-control" name="byteimg"/>
                  </div>
              </div>
+                <div class="form-group">
+                    @{
+                        var cmpid = Request.Cookies["nameID"].Value;                                                                      
+                    }
+                    @Html.EditorFor(m => m.CompanyID, "", new { htmlAttributes = new { hidden = "hidden" } })
+                </div>
 
                 <div class="form-group">
                     <div class="col-lg-offset-2 col-lg-10">
