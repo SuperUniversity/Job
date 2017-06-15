@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-  <EntityContainerMapping StorageEntityContainer="superuniversityModelStoreContainer" CdmEntityContainer="superuniversityEntities">
+  <EntityContainerMapping StorageEntityContainer="superuniversityModelStoreContainer" CdmEntityContainer="superuniversityEntities1">
     <EntitySetMapping Name="CompanyJobTypeTable">
       <EntityTypeMapping TypeName="superuniversityModel.CompanyJobTypeTable">
         <MappingFragment StoreEntitySet="CompanyJobTypeTable">
@@ -69,6 +69,17 @@
           <ScalarProperty Name="JobTypeDescription" ColumnName="JobTypeDescription" />
           <ScalarProperty Name="JobType" ColumnName="JobType" />
           <ScalarProperty Name="JobTypeID" ColumnName="JobTypeID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="JobCommet">
+      <EntityTypeMapping TypeName="superuniversityModel.JobCommet">
+        <MappingFragment StoreEntitySet="JobCommet">
+          <ScalarProperty Name="JobID" ColumnName="JobID" />
+          <ScalarProperty Name="CreateDate" ColumnName="CreateDate" />
+          <ScalarProperty Name="Content" ColumnName="Content" />
+          <ScalarProperty Name="UserID" ColumnName="UserID" />
+          <ScalarProperty Name="Id" ColumnName="Id" />
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>

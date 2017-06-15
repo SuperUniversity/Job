@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="superuniversityModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-  <EntityContainer Name="superuniversityEntities" annotation:LazyLoadingEnabled="true">
+  <EntityContainer Name="superuniversityEntities1" annotation:LazyLoadingEnabled="true">
     <EntitySet Name="CompanyJobTypeTable" EntityType="superuniversityModel.CompanyJobTypeTable" />
     <EntitySet Name="EmployerCompany" EntityType="superuniversityModel.EmployerCompany" />
     <EntitySet Name="Job" EntityType="superuniversityModel.Job" />
     <EntitySet Name="JobList" EntityType="superuniversityModel.JobList" />
     <EntitySet Name="Jobtime" EntityType="superuniversityModel.Jobtime" />
     <EntitySet Name="JobTypes" EntityType="superuniversityModel.JobTypes" />
+    <EntitySet Name="JobCommet" EntityType="superuniversityModel.JobCommet" />
   </EntityContainer>
   <EntityType Name="CompanyJobTypeTable">
     <Key>
@@ -72,5 +73,15 @@
     <Property Name="JobTypeID" Type="Int32" Nullable="false" />
     <Property Name="JobType" Type="String" Nullable="false" MaxLength="10" FixedLength="true" Unicode="true" />
     <Property Name="JobTypeDescription" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+  </EntityType>
+  <EntityType Name="JobCommet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="UserID" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="CreateDate" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="JobID" Type="Int32" Nullable="false" />
   </EntityType>
 </Schema>

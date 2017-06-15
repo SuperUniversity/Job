@@ -1,6 +1,14 @@
 ﻿@model Project.Areas.JobArea.Models.Job
 @{
     ViewBag.Title = "詳細資料";
+
+    var commentList = new List<Project.Areas.JobArea.Models.JobCommet>();
+    using (Project.Areas.JobArea.Models.superuniversityEntities1 db = new Project.Areas.JobArea.Models.superuniversityEntities1())
+    {
+        commentList = (from s in db.JobCommets
+                       where s.JobID == this.Model.JobID
+                       select s).ToList();
+    }
 }
 @section styles{
     <style>
@@ -90,27 +98,31 @@
             marker.openInfoWindow(place.address);
         }
 
+        $('JobID')
     </script>
 }
 @using (Html.BeginForm("Detail", "Home", FormMethod.Post, new { @class = "form-horizontal", enctype = "multipart/form-data" }))
 {
     <div class="row">
+        <div class="form-group">
+            @Html.EditorFor(m=>m.JobID,"", new { htmlAttributes = new { hidden = "hidden" } })
+        </div>
         <div class="col-lg-4">
             <div class="form-group">
-                @Html.LabelFor(e => e.JobName, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
+                @Html.LabelFor(e => e.JobName, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
                    <p class="beautiful">@Html.DisplayFor(e => e.JobName)</p> 
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.JobStartTime, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
+                @Html.LabelFor(e => e.JobStartTime, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
                     @Html.EditorFor(e => e.JobStartTime, new { htmlAttributes = new {  @class = "form-control" } })
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.TimeID, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
+                @Html.LabelFor(e => e.TimeID, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
                     @{
                     var times = new SelectList(ViewBag.datas, "TimeID", "jobtimes");
                     }
@@ -118,8 +130,8 @@
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.PayPerHour, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
+                @Html.LabelFor(e => e.PayPerHour, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
                     @{
                         if (Model.PayPerHour == 0)
                         {
@@ -139,25 +151,39 @@
 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.Workplace, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
+                @Html.LabelFor(e => e.Workplace, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
                     <p class="lookgood"> @Html.DisplayFor(e => e.Workplace)</p>
 
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.Description, new { @class = "col-sm-2 control-label" })
-                <div class="col-sm-10">
+                @Html.LabelFor(e => e.Description, new { @class = "col-sm-3 control-label" })
+                <div class="col-sm-9">
                     <p class="lookgood">@Html.TextAreaFor(e => e.Description, new { style = "resize:none", @class = "form-control", rows = "10" })</p>
                 </div>
             </div>
             <div class="form-group">
-                @Html.LabelFor(e => e.ImageWebSite, new { @class = "col-lg-2 control-label" })
-                <div class="col-lg-10">
+                @Html.LabelFor(e => e.ImageWebSite, new { @class = "col-lg-3 control-label" })
+                <div class="col-lg-9">
                     @Html.EditorFor(e => e.ImageWebSite, new { htmlAttributes = new { @class = "form-control" } })
                     @Html.ValidationMessageFor(e => e.ImageWebSite, "", new { @class = "text-danger" })
                 </div>
             </div>
+            <div class="form-group">
+                @Html.Label("所屬公司", new { @class = "col-sm-3 control-label" })
+                <div class="col-lg-9">
+                    @{
+                            var x = ViewBag.name;
+                            var d = ViewBag.id;
+                            foreach (var p in x.CN)
+                            {
+                            <p style="width:400px"><a href="@Url.Action("CompanyDetail", "Home",new { Area="JobArea",id=d})" class="text text-info">@p.CompanyName</a></p>
+                        }
+                    }
+                </div>
+            </div>
+
         </div>
         <div class="col-lg-8">
             <div class="form-group">
@@ -184,6 +210,7 @@
                 <div class="col-lg-10" id="map" style="width:600px;height:400px">
                 </div>
             </div>
+            <div class="col-lg-4"></div>
             <div class="col-lg-2">
               <div class="form-group">
                    <div class="col-sm-offset-2 col-sm-10">
@@ -194,7 +221,7 @@
             <div class="col-lg-2">
             <div class="form-group">
                    <div class="col-sm-offset-2 col-sm-10">
-                        <a href="~/JobArea/Home/Index" class="btn btn-warning">我要應徵</a>
+                        <a href="~/JobArea/Home/Hire" class="btn btn-warning" >我要應徵</a>
                   </div>
              </div>
            </div>
@@ -202,4 +229,37 @@
     </div>
 
                         }
+
+<div class="form-group">
+    <div>
+        @Html.Label("工作評價", new { })
+    </div>
+
+    <div >
+        @using (Html.BeginForm("AddComment", "Home",new { id=Model.JobID}, FormMethod.Post, new { }))
+        {
+            if(Request.Cookies["name"] != null)
+            {
+                @Html.TextArea("Content", "", new { rows = "5", style = "width:1000px" })
+                <input type="submit" value="留言" class="btn btn-default" style="margin-top:60px" />
+            }
+            else
+            {
+                @Html.TextArea("Content", "", new { rows = "5", style = "width:1000px" })
+                @*<input type="url"  value="留言" class="btn btn-default" style="margin-top:60px" />*@
+                <a href="@Url.Action("Login","Employer",new { Area="JobArea"})" class="btn btn-default" style="margin-top:60px">留言</a>
+            }
+
+        }
+    </div>
+    <div >
+        @foreach (var comment in commentList)
+        {
+            <h6>@comment.UserID：</h6>
+            <span>@comment.Content</span>
+            <p>(@comment.CreateDate)</p>
+            <hr />
+        }
+    </div>
+</div>
 

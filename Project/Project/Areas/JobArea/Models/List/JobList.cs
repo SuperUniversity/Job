@@ -34,7 +34,7 @@ namespace Project.Areas.JobArea.Models.List
 
             if (findItem == default(JobItems))
             {
-                using(superuniversityEntities db =new superuniversityEntities())
+                using(superuniversityEntities1 db =new superuniversityEntities1())
                 {
                     var job = (from s in db.Job
                                where s.JobID == Jobid

@@ -13,10 +13,10 @@ namespace Project.Areas.JobArea.Models
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class superuniversityEntities : DbContext
+    public partial class superuniversityEntities1 : DbContext
     {
-        public superuniversityEntities()
-            : base("name=superuniversityEntities")
+        public superuniversityEntities1()
+            : base("name=superuniversityEntities1")
         {
         }
     
@@ -31,5 +31,6 @@ namespace Project.Areas.JobArea.Models
         public virtual DbSet<JobList> JobList { get; set; }
         public virtual DbSet<Jobtime> Jobtime { get; set; }
         public virtual DbSet<JobTypes> JobTypes { get; set; }
+        public virtual DbSet<JobCommet> JobCommets { get; set; }
     }
 }

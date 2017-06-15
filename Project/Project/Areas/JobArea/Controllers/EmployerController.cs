@@ -11,7 +11,7 @@ namespace Project.Areas.JobArea.Controllers
     public class EmployerController : Controller
     {
         private IRepository<EmployerCompany> db = new Repository<EmployerCompany>();
-        private superuniversityEntities su = new superuniversityEntities();
+        private superuniversityEntities1 su = new superuniversityEntities1();
         // GET: JobArea/Employer
         public ActionResult Index()
         {
@@ -54,8 +54,6 @@ namespace Project.Areas.JobArea.Controllers
             emp.CompanyID = id;
             db.Update(emp);
             return RedirectToAction("Index");
-
-
         }
 
         public ActionResult Delete(int id = 0)
@@ -94,7 +92,7 @@ namespace Project.Areas.JobArea.Controllers
         {
             Response.Cookies["name"].Expires = DateTime.Now.AddSeconds(-1);
             Session.Abandon();
-            return RedirectToAction("Index", "Job");
+            return RedirectToAction("Index", "HomePage");
         }
 
     }

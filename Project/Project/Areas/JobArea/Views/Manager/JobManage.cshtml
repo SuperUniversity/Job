@@ -58,7 +58,7 @@
     }
 }
 
-<a href="~/JobArea/Job/Insert" class="btn btn-info">新增工作</a>
+<a href="~/JobArea/Job/Insert/@Request.Cookies["nameid"].Value" class="btn btn-info">新增工作</a>
 <table class="table table-bordered table-hover">
     <thead>
         <tr>
@@ -97,7 +97,7 @@
                     }
                 }
                 <td>@Html.DisplayFor(j => jb.Workplace)</td>
-                <td><a href="~/JobArea/Job/Edit/@jb.JobID" class="btn btn-info">編輯</a></td>
+                <td><a href="~/JobArea/Manager/JobEdit/@jb.JobID" class="btn btn-info">編輯</a></td>
                 <td><a href="~/JobArea/Job/Delete/@jb.JobID" class="btn btn-danger"> 刪除</a></td>
             </tr>
                     }

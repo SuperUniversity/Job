@@ -10,7 +10,7 @@ namespace Project.Areas.JobArea.Controllers
     public class JobController : Controller
     {
         private IRepository<Job> db = new Repository<Job>();
-        private superuniversityEntities su = new superuniversityEntities();
+        private superuniversityEntities1 su = new superuniversityEntities1();
         // GET: JobArea/Job
         public ActionResult Index()
         {
@@ -19,9 +19,10 @@ namespace Project.Areas.JobArea.Controllers
             return View(jb);
         }
         [HttpGet]
-        public ActionResult Insert()
+        public ActionResult Insert(int id)
         {
             
+            ViewBag.id = id;  
             ViewBag.datas = su.Jobtime.ToList();
             return View();
         }

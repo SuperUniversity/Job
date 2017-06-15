@@ -28,7 +28,7 @@ namespace Project.Areas.JobArea.Controllers
 
                 //取得廠商的ID
                 var EmployerID = HttpContext.User.Identity.GetUserId();
-                using(superuniversityEntities db =new superuniversityEntities())
+                using(superuniversityEntities1 db =new superuniversityEntities1())
                 {
                     var order = new Models.EmployerCompany()
                     {

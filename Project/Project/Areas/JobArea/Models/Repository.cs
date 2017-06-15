@@ -9,7 +9,7 @@ namespace Project.Areas.JobArea.Models
 {
     public class Repository<T> : IRepository<T> where T : class
     {
-        private superuniversityEntities db = new superuniversityEntities();
+        private superuniversityEntities1 db = new superuniversityEntities1();
         private DbSet<T> DbSet = null;
 
         public Repository()

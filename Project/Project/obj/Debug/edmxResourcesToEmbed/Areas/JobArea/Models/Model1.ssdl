@@ -40,6 +40,16 @@
     <Property Name="Image" Type="varbinary(max)" />
     <Property Name="ImageWebSite" Type="nvarchar(max)" />
   </EntityType>
+  <EntityType Name="JobCommet">
+    <Key>
+      <PropertyRef Name="Id" />
+    </Key>
+    <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="UserID" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Content" Type="nvarchar(max)" />
+    <Property Name="CreateDate" Type="datetime" Nullable="false" />
+    <Property Name="JobID" Type="int" Nullable="false" />
+  </EntityType>
   <EntityType Name="JobList">
     <Key>
       <PropertyRef Name="ListID" />
@@ -69,6 +79,7 @@
     <EntitySet Name="CompanyJobTypeTable" EntityType="Self.CompanyJobTypeTable" Schema="JobMarket" store:Type="Tables" />
     <EntitySet Name="EmployerCompany" EntityType="Self.EmployerCompany" Schema="JobMarket" store:Type="Tables" />
     <EntitySet Name="Job" EntityType="Self.Job" Schema="JobMarket" store:Type="Tables" />
+    <EntitySet Name="JobCommet" EntityType="Self.JobCommet" Schema="JobMarket" store:Type="Tables" />
     <EntitySet Name="JobList" EntityType="Self.JobList" Schema="JobMarket" store:Type="Tables" />
     <EntitySet Name="Jobtime" EntityType="Self.Jobtime" Schema="JobMarket" store:Type="Tables" />
     <EntitySet Name="JobTypes" EntityType="Self.JobTypes" Schema="JobMarket" store:Type="Tables" />

@@ -20,13 +20,14 @@ namespace Project.Areas.JobArea.Models
         public string JobName { get; set; }
 
         [DisplayName("公司編號")]
-        public Nullable<int> CompanyID { get; set; }
-        [DisplayName("可上班日")]
+            public int CompanyID { get; set; }
+            [DisplayName("可上班日")]
         [DataType(DataType.Date)]
         [DisplayFormat(ApplyFormatInEditMode = true, DataFormatString = "{0:yyyy-MM-dd}")]
         public Nullable<System.TimeSpan> JobStartTime { get; set; }
+
         [DisplayName("工作時段")]
-        public Nullable<System.TimeSpan> TimeID { get; set; }
+        public int TimeID { get; set; }
         [DisplayName("時薪")]
         [DisplayFormat(DataFormatString = "{0:C0}")]
         public Nullable<decimal> PayPerHour { get; set; }

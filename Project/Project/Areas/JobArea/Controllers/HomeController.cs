@@ -5,24 +5,20 @@ using System.Web;
 using System.Web.Mvc;
 using Project.Areas.JobArea.Models;
 using PagedList;
+using Project.Areas.JobArea.ViewModel;
+using Microsoft.AspNet.Identity;
 
 namespace Project.Areas.JobArea.Controllers
 {
     public class HomeController : Controller
     {
-        superuniversityEntities db = new superuniversityEntities();
+        superuniversityEntities1 db = new superuniversityEntities1();
         IRepository<Job> job = new Repository<Job>();
         IRepository<EmployerCompany> _Emp = new Repository<EmployerCompany>();
         // GET: JobArea/Home
         public ActionResult Index(int page=1,int perpage=15,string sortby="",string Jobnamesreach="",string Workplacesreach="",string Allsreach="")
         {
             //前台的工作管理
-
-            //公司名稱
-            //var result = (from s in db.EmployerCompany
-            //              where s.CompanyID == job.
-            //              select s.CompanyName);
-            //ViewBag.name = result;
 
             //收尋的block            
             var jobfront = new List<Job>();
@@ -89,24 +85,100 @@ namespace Project.Areas.JobArea.Controllers
 
         public ActionResult Detail(Job j,int id)
         {
+            CompanyName cn = new CompanyName(id);
+            var result = (from s in db.Job
+                          where s.JobID == id
+                          select s).FirstOrDefault();
+            if (result == default(Models.Job))
+            {
+                return RedirectToAction("Index");
+            }
+            else
+            {
+            ViewBag.id = id;
+            ViewBag.name = cn;
             ViewBag.map = db.Job.Find(id).Workplace.ToString();
             ViewBag.datas = db.Jobtime.ToList();
-            return View(job.GetById(id));            
-        }
+            return View(job.GetById(id)); 
 
+            }
+           
+        }
+        [HttpPost]        
+       public ActionResult AddComment(int id,string Content)
+        {
+            var userid = HttpUtility.UrlDecode(Request.Cookies["name"].Value);
+            var now = DateTime.Now;
+            var comment = new Models.JobCommet()
+            {
+                JobID = id,
+                Content = Content,
+                UserID = userid,
+                CreateDate = now
+            };
+            using (Models.superuniversityEntities1 db = new Models.superuniversityEntities1())
+            {
+                db.JobCommets.Add(comment);
+                db.SaveChanges();
+            }
+
+            return RedirectToAction("Detail", new { id = id });
+
+        }
         public ActionResult CompanyDetail(EmployerCompany emp,int id)
         {
-            ViewBag.Gmap = db.EmployerCompany.Find(job.GetById(id).CompanyID).CompanyAdress.ToString(); 
-            var list=  (from s in db.Job.AsEnumerable()
-                        where (s.CompanyID == int.Parse(Request.Cookies["nameid"].Value))
-                        select s.JobName);
-            ViewBag.Jobname = list.ToList();
+            JobNameID jnd = new JobNameID(id);
+            ViewBag.Gmap = db.EmployerCompany.Find(job.GetById(id).CompanyID).CompanyAdress.ToString();
+            ViewBag.job = jnd;
+            
             return View(_Emp.GetById(job.GetById(id).CompanyID));
         }
-        public ActionResult Hire(Job j)
+        public ActionResult Hire(int id)
         {
-
+            JobNameID jnd = new JobNameID(id);
+            ViewBag.job = jnd;
             return View();
+        }
+        [HttpPost]
+        public ActionResult Hire(Job j,int id,string[] nothing)
+        {
+            var receviceemail = nothing[1];
+            JobNameID jnd = new JobNameID(id);
+            ViewBag.job = jnd;
+
+            if (receviceemail != null)
+            {
+            System.Net.Mail.MailMessage em = new System.Net.Mail.MailMessage();
+            em.From = new System.Net.Mail.MailAddress("rayho880058@gmail.com", "MSIT11403人資部", System.Text.Encoding.UTF8);
+            em.To.Add(new System.Net.Mail.MailAddress(string.Format("{0}",receviceemail.ToString())));    //收件者
+            em.Subject = string.Format("你主動應徵{0}已被讀取", job.GetById(id).JobName);     //信件主題 
+            em.SubjectEncoding = System.Text.Encoding.UTF8;
+            em.Body = string.Format("{0}你好,你於{1}應徵{2}的信函已被讀取，由於人事單位在處理眾多求職者資料時需要一些時間，若您的資格符合他們的需求將會立即通知您面試，請靜候佳音，謝謝您！<p>(注意：本讀取回條僅代表廠商已打開您的履歷資料，不代表錄取通知！)</p><p>此信件為系統自動發送，請勿直接回覆。</p>", HttpUtility.UrlDecode(Request.Cookies["name"].Value),DateTime.Now, job.GetById(id).JobName);            //內容 
+            em.BodyEncoding = System.Text.Encoding.UTF8;
+            em.IsBodyHtml = true;     //信件內容是否使用HTML格式
+            System.Net.Mail.SmtpClient smtp = new System.Net.Mail.SmtpClient();
+            //登入帳號認證  
+            smtp.Credentials = new System.Net.NetworkCredential("rayho880058@gmail.com", "some137root724");
+            //使用587 Port - google要設定
+            smtp.Port = 587;
+            smtp.EnableSsl = true;   //啟動SSL 
+            //end of google設定
+            smtp.Host = "smtp.gmail.com";   //SMTP伺服器
+            smtp.Send(em);
+
+            TempData["message"] = "已寄出申請";
+
+
+            return RedirectToAction("Index");
+            }
+            else
+            {
+                TempData["message"] = "輸入錯誤";
+                return View();
+
+            }
+            
+          
         }
     }
 }
